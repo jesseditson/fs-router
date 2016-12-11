@@ -33,6 +33,22 @@ module.exports = async function(req, res) {
 }
 ```
 
+The above usage assumes you have a folder called `routes` next to the `index.js` file, that looks something like this:
+```
+routes/
+├── foo
+│   └── :param
+│       └── thing.js
+└── things
+    └── :id.js
+```
+
+the above tree would generate the following routes:
+```
+/foo/:param/thing
+/things/:id
+```
+
 **defining a route**
 ```javascript
 // routes/foo/bar.js
