@@ -5,11 +5,11 @@ Use the FS as your micro router
 
 ### "features"
 
-✅ 0 runtime dependencies
-✅ < 100 loc
-✅ little or no config
-✅ parameterized paths
-✅ parses query string
+- ✅ 0 runtime dependencies
+- ✅ < 100 loc
+- ✅ little or no config
+- ✅ parameterized paths
+- ✅ parses query string
 
 ### intent
 
@@ -21,7 +21,7 @@ This is the simplest approach I could think of to create a flexible router that 
 ### usage
 
 **router usage**
-```
+```javascript
 // index.js
 const { send } = require('micro')
 let match = require('micro-router')(__dirname + '/routes')
@@ -46,7 +46,7 @@ module.exports.GET = async function(req, res) {
 ```
 
 **path parameters**
-```
+```javascript
 // routes/foos/:id.js
 const { send } = require('micro')
 
@@ -58,7 +58,7 @@ module.exports = async function(req, res) {
 ```
 
 **works great with async/await**
-```
+```javascript
 const { send, json } = require('micro')
 const qs = require('querystring')
 require('isomorphic-fetch')
@@ -73,7 +73,7 @@ module.exports.GET = async function(req, res) {
 ```
 
 **priority**
-```
+```javascript
 module.exports.GET = async function(req, res) {
   send(res, 200, {})
 }
@@ -84,7 +84,7 @@ module.exports.priority = -1
 ```
 
 **custom path**
-```
+```javascript
 // routes/whatever.js
 module.exports.GET = async function(req, res) {
   send(res, 200, {})
