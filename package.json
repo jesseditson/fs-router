@@ -1,0 +1,36 @@
+{
+  "name": "micro-router",
+  "version": "0.1.0",
+  "description": "Tiny router using the fs as paths",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/**/*-test.js",
+    "coverage": "nyc npm test",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "lcov": "nyc report --reporter=lcov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesseditson/micro-router.git"
+  },
+  "keywords": [
+    "router",
+    "micro",
+    "match",
+    "route",
+    "request",
+    "api",
+    "rest"
+  ],
+  "author": "Jesse Ditson <jesse.ditson@gmail.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/jesseditson/micro-router/issues"
+  },
+  "homepage": "https://github.com/jesseditson/micro-router#readme",
+  "devDependencies": {
+    "coveralls": "^2.11.15",
+    "nyc": "^10.0.0",
+    "tape": "^4.6.3"
+  }
+}
