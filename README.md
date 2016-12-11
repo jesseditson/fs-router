@@ -34,7 +34,7 @@ module.exports = async function(req, res) {
 ```
 
 **defining a route**
-```
+```javascript
 // routes/foo/bar.js
 const { send } = require('micro')
 
