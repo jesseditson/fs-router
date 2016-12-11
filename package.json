@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "tape test/**/*-test.js",
-    "coverage": "nyc npm test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "lcov": "nyc report --reporter=lcov"
+    "lcov": "nyc npm test && nyc report --reporter=lcov"
   },
   "repository": {
     "type": "git",
