@@ -1,5 +1,5 @@
 {
-  "name": "micro-router",
+  "name": "fs-router",
   "version": "0.1.0",
   "description": "Tiny router using the fs as paths",
   "main": "index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jesseditson/micro-router.git"
+    "url": "git+https://github.com/jesseditson/fs-router.git"
   },
   "keywords": [
     "router",
@@ -24,9 +24,9 @@
   "author": "Jesse Ditson <jesse.ditson@gmail.com>",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/jesseditson/micro-router/issues"
+    "url": "https://github.com/jesseditson/fs-router/issues"
   },
-  "homepage": "https://github.com/jesseditson/micro-router#readme",
+  "homepage": "https://github.com/jesseditson/fs-router#readme",
   "devDependencies": {
     "coveralls": "^2.11.15",
     "nyc": "^10.0.0",

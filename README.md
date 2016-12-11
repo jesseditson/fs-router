@@ -1,7 +1,7 @@
-# micro-router
+# fs-router
 Use the FS as your micro router
-[![Build Status](https://travis-ci.org/jesseditson/micro-router.svg?branch=master)](https://travis-ci.org/jesseditson/micro-router)
-[![Coverage Status](https://coveralls.io/repos/github/jesseditson/micro-router/badge.svg?branch=master)](https://coveralls.io/github/jesseditson/micro-router?branch=master)
+[![Build Status](https://travis-ci.org/jesseditson/fs-router.svg?branch=master)](https://travis-ci.org/jesseditson/fs-router)
+[![Coverage Status](https://coveralls.io/repos/github/jesseditson/fs-router/badge.svg?branch=master)](https://coveralls.io/github/jesseditson/fs-router?branch=master)
 
 ### "features"
 
@@ -24,7 +24,7 @@ This is the simplest approach I could think of to create a flexible router that 
 ```javascript
 // index.js
 const { send } = require('micro')
-let match = require('micro-router')(__dirname + '/routes')
+let match = require('fs-router')(__dirname + '/routes')
 
 module.exports = async function(req, res) {
   let matched = match(req)
@@ -40,7 +40,7 @@ const { send } = require('micro')
 
 // respond to specific methods by exposing their verbs
 module.exports.GET = async function(req, res) {
-  // micro-router decorates your req object with param and query hashes
+  // fs-router decorates your req object with param and query hashes
   send(res, 200, { params: req.params, query: req.query })
 }
 ```
