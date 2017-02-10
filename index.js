@@ -13,8 +13,14 @@ function addMatch(route) {
     routePath = routePath.replace(paramPattern, '([^\?\/]+)')
     paramNames.push(matched[1])
   }
+  // if a route ends with `index`, allow matching that route without matching the `index` part
+  if (path.basename(routePath) === 'index') {
+    route.isIndex = true
+    routePath = routePath.replace(/\/index$/, '\/?(:?index)?')
+  }
   // create a regex with our path
-  let pattern = new RegExp(`^${routePath}\\??(.*)`, 'i')
+  let pattern = new RegExp(`^${routePath}(\\?(.*)|$)`, 'i')
+  route.pattern = pattern
   route.match = url => {
     let m = url.match(pattern)
     if (m) {
@@ -51,9 +57,15 @@ module.exports = function router(routesDir) {
       }
       return route
     })
+    // add a match function
+    .map(addMatch)
+    // sort named files ahead of subfolder index files
+    .map(route => {
+      if (!route.priority && route.isIndex) route.priority = -1
+      return route
+    })
     // if a route exposes a `priority` property, sort the route on it.
     .sort((a, b) => val(a.priority) < val(b.priority) ? 1 : -1)
-    .map(addMatch)
 
   // generated match method - call with a req object to get a route.
   return function match(req) {
