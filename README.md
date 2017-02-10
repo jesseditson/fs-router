@@ -110,3 +110,14 @@ module.exports.GET = async function(req, res) {
 // or if you just want to avoid putting `:` in your file/folder names or something
 module.exports.path = '/foo/bar'
 ```
+
+**index routes**
+```javascript
+// routes/index.js
+module.exports.GET = async function(req, res) {
+  return 'hello!'
+}
+// The above route would be reachable at / and /index.
+// This works for deep paths (/thing/index.js maps to /thing and /thing/index)
+// and even for params (/thing/:param/index.js maps to /thing/* and /thing/*/index).
+```
