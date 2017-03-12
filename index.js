@@ -45,18 +45,21 @@ function findRoutes(dir) {
 }
 
 const val = v => (typeof v === 'undefined' ? 0 : v)
-module.exports = function router(routesDir) {
+module.exports = function router(routesDir, getRoute) {
+  getRoute = getRoute || require
   const routes = findRoutes(routesDir)
-    // require route files, then add a 'path' property to them
-    // the path is in the form of '/path/file', relative to routesDir
     .map(routeFile => {
-      let route = require(routeFile)
-      let extPattern = new RegExp(path.extname(routeFile) + '$')
+      // get info about route files, then add a 'path' property to them
+      // the path is in the form of '/path/file', relative to routesDir
+      const route = getRoute(routeFile)
+      const extPattern = new RegExp(path.extname(routeFile) + '$')
       if (!route.path) {
         route.path = '/' + path.relative(routesDir, routeFile).replace(extPattern, '')
       }
       return route
     })
+    // allow our getRoute to return falsy to skip a route
+    .filter(r => !!r)
     // add a match function
     .map(addMatch)
     // sort named files ahead of subfolder index files
@@ -68,16 +71,16 @@ module.exports = function router(routesDir) {
     .sort((a, b) => val(a.priority) < val(b.priority) ? 1 : -1)
 
   // generated match method - call with a req object to get a route.
-  return function match(req) {
-    let routeFn = r => r[req.method] || (typeof r === 'function' && r)
+  return function match(req, detect) {
+    detect = detect || (r => r[req.method] || (typeof r === 'function' && r))
     let found = routes.find(r => {
       let matched = r.match(req.url)
-      let hasFn = routeFn(r)
+      let hasFn = detect(r)
       if (matched && hasFn) {
         Object.assign(req, matched)
         return true
       }
     })
-    if (found) return routeFn(found)
+    if (found) return detect(found)
   }
 }
