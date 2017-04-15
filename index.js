@@ -2,7 +2,9 @@ const path = require('path')
 const fs = require('fs')
 const qs = require('querystring')
 
-const paramPattern = /:([^\/]+)/
+// create global paramPattern but define it in the router to allow custom char for parameterized routes
+let paramPattern
+
 // takes routes and decorates them with a 'match' method that will return { params, query } if a path matches
 function addMatch(route) {
   let routePath = route.path
@@ -45,7 +47,11 @@ function findRoutes(dir) {
 }
 
 const val = v => (typeof v === 'undefined' ? 0 : v)
-module.exports = function router(routesDir) {
+
+// allow user to define a custom character for parameterized routes, using ':' as a default
+module.exports = function router(routesDir, paramChar = ':') {
+  paramPattern = new RegExp(`${paramChar}([^\/]+)`);
+  
   const routes = findRoutes(routesDir)
     // require route files, then add a 'path' property to them
     // the path is in the form of '/path/file', relative to routesDir
@@ -53,7 +59,8 @@ module.exports = function router(routesDir) {
       let route = require(routeFile)
       let extPattern = new RegExp(path.extname(routeFile) + '$')
       if (!route.path) {
-        route.path = '/' + path.relative(routesDir, routeFile).replace(extPattern, '')
+        // Sanitize routesDir for cross OS compatibility
+        route.path = '/' + path.relative(routesDir, routeFile).replace(extPattern, '').split('\\').join('/')
       }
       return route
     })
