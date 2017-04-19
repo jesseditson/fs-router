@@ -45,8 +45,10 @@ function findRoutes (dir) {
 }
 
 const val = v => (typeof v === 'undefined' ? 0 : v)
-module.exports = function router (routesDir) {
+module.exports = function router (routesDir, config) {
   const routes = findRoutes(routesDir)
+    // if filter function is set, filter routes
+    .filter(config && config.filter || function () { return true })
     // require route files, then add a 'path' property to them
     // the path is in the form of '/path/file', relative to routesDir
     .map(routeFile => {
