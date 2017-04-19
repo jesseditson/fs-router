@@ -1,7 +1,8 @@
+const path = require('path')
 const test = require('tape')
 const router = require('..')
 
-let match = router(__dirname + '/fixtures/index')
+let match = router(path.join(__dirname, '/fixtures/index'))
 
 test('uses index.js when the root is requested', t => {
   t.plan(2)

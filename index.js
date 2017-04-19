@@ -4,7 +4,7 @@ const qs = require('querystring')
 
 const paramPattern = /:([^\/]+)/
 // takes routes and decorates them with a 'match' method that will return { params, query } if a path matches
-function addMatch(route) {
+function addMatch (route) {
   let routePath = route.path
   let paramNames = []
   let matched
@@ -36,7 +36,7 @@ function addMatch(route) {
 }
 
 // recursively searches for all js files inside a directory tree, and returns their full paths
-function findRoutes(dir) {
+function findRoutes (dir) {
   let files = fs.readdirSync(dir)
   let resolve = f => path.join(dir, f)
   let routes = files.filter(f => path.extname(f) === '.js').map(resolve)
@@ -45,7 +45,7 @@ function findRoutes(dir) {
 }
 
 const val = v => (typeof v === 'undefined' ? 0 : v)
-module.exports = function router(routesDir) {
+module.exports = function router (routesDir) {
   const routes = findRoutes(routesDir)
     // require route files, then add a 'path' property to them
     // the path is in the form of '/path/file', relative to routesDir
@@ -68,7 +68,7 @@ module.exports = function router(routesDir) {
     .sort((a, b) => val(a.priority) < val(b.priority) ? 1 : -1)
 
   // generated match method - call with a req object to get a route.
-  return function match(req) {
+  return function match (req) {
     let routeFn = r => r[req.method] || (typeof r === 'function' && r)
     let found = routes.find(r => {
       let matched = r.match(req.url)

@@ -2,6 +2,7 @@
 Use the FS as your micro router
 [![Build Status](https://travis-ci.org/jesseditson/fs-router.svg?branch=master)](https://travis-ci.org/jesseditson/fs-router)
 [![Coverage Status](https://coveralls.io/repos/github/jesseditson/fs-router/badge.svg?branch=master)](https://coveralls.io/github/jesseditson/fs-router?branch=master)
+[![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 ### "features"
 
