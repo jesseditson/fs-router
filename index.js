@@ -2,21 +2,21 @@ const path = require('path')
 const fs = require('fs')
 const qs = require('querystring')
 
-const paramPattern = /:([^\/]+)/
+const paramPattern = /:([^/]+)/
 // takes routes and decorates them with a 'match' method that will return { params, query } if a path matches
-function addMatch(route) {
+function addMatch (route) {
   let routePath = route.path
   let paramNames = []
   let matched
   // find any paths prefixed with a `:`, and treat them as capture groups
-  while (matched = routePath.match(paramPattern)) {
-    routePath = routePath.replace(paramPattern, '([^\?\/]+)')
+  while ((matched = routePath.match(paramPattern)) !== null) {
+    routePath = routePath.replace(paramPattern, '([^?/]+)')
     paramNames.push(matched[1])
   }
   // if a route ends with `index`, allow matching that route without matching the `index` part
   if (path.basename(routePath) === 'index') {
     route.isIndex = true
-    routePath = routePath.replace(/\/index$/, '\/?(:?index)?')
+    routePath = routePath.replace(/\/index$/, '/?(:?index)?')
   }
   // create a regex with our path
   let pattern = new RegExp(`^${routePath}(\\?(.*)|$)`, 'i')
@@ -36,7 +36,7 @@ function addMatch(route) {
 }
 
 // recursively searches for all js files inside a directory tree, and returns their full paths
-function findRoutes(dir) {
+function findRoutes (dir) {
   let files = fs.readdirSync(dir)
   let resolve = f => path.join(dir, f)
   let routes = files.filter(f => path.extname(f) === '.js').map(resolve)
@@ -45,8 +45,10 @@ function findRoutes(dir) {
 }
 
 const val = v => (typeof v === 'undefined' ? 0 : v)
-module.exports = function router(routesDir) {
+module.exports = function router (routesDir, config) {
   const routes = findRoutes(routesDir)
+    // if filter function is set, filter routes
+    .filter(config && config.filter || function () { return true })
     // require route files, then add a 'path' property to them
     // the path is in the form of '/path/file', relative to routesDir
     .map(routeFile => {
@@ -68,7 +70,7 @@ module.exports = function router(routesDir) {
     .sort((a, b) => val(a.priority) < val(b.priority) ? 1 : -1)
 
   // generated match method - call with a req object to get a route.
-  return function match(req) {
+  return function match (req) {
     let routeFn = r => r[req.method] || (typeof r === 'function' && r)
     let found = routes.find(r => {
       let matched = r.match(req.url)

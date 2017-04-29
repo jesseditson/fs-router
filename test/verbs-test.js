@@ -1,7 +1,8 @@
+const path = require('path')
 const test = require('tape')
 const router = require('..')
 
-let match = router(__dirname + '/fixtures/verbs')
+let match = router(path.join(__dirname, '/fixtures/verbs'))
 const verbs = ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'OPTIONS']
 
 test('correctly maps various verbs', t => {

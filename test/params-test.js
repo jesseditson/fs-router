@@ -1,7 +1,8 @@
+const path = require('path')
 const test = require('tape')
 const router = require('..')
 
-let match = router(__dirname + '/fixtures/params')
+let match = router(path.join(__dirname, '/fixtures/params'))
 
 test('files starting with `:` are treated as path params', t => {
   t.plan(1)

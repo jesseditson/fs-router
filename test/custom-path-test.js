@@ -1,7 +1,8 @@
+const path = require('path')
 const test = require('tape')
 const router = require('..')
 
-let match = router(__dirname + '/fixtures/custom')
+let match = router(path.join(__dirname, '/fixtures/custom'))
 
 test('uses custom path if provided', t => {
   t.plan(1)
@@ -12,7 +13,7 @@ test('uses custom path if provided', t => {
 test('uses properly parses params in custom path', t => {
   t.plan(1)
   let req = { url: '/random/custom/foo', method: 'GET' }
-  let fn = match(req)
+  match(req)
   t.equal(req.params.param, 'foo', 'param is correct')
 })
 

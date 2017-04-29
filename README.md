@@ -2,6 +2,7 @@
 Use the FS as your micro router
 [![Build Status](https://travis-ci.org/jesseditson/fs-router.svg?branch=master)](https://travis-ci.org/jesseditson/fs-router)
 [![Coverage Status](https://coveralls.io/repos/github/jesseditson/fs-router/badge.svg?branch=master)](https://coveralls.io/github/jesseditson/fs-router?branch=master)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ### "features"
 
@@ -120,4 +121,41 @@ module.exports.GET = async function(req, res) {
 // The above route would be reachable at / and /index.
 // This works for deep paths (/thing/index.js maps to /thing and /thing/index)
 // and even for params (/thing/:param/index.js maps to /thing/* and /thing/*/index).
+```
+
+**filter routes**
+```javascript
+// index.js
+const { send } = require('micro')
+
+// set up config to filter only paths including `foo`
+const config = {filter: f => f.indexOf('foo') !== -1}
+
+// pass config to `fs-router` as optional second paramater
+let match = require('fs-router')(__dirname + '/routes', config)
+
+module.exports = async function(req, res) {
+  let matched = match(req)
+  if (matched) return await matched(req, res)
+  send(res, 404, { error: 'Not found' })
+}
+```
+
+The above usage assumes you have a folder called `routes` next to the `index.js` file, that looks something like this:
+```
+routes/
+├── foo
+│   ├── index.js
+│   └── thing.js
+└── bar
+    ├── index.js
+    ├── foo.js
+    └── thing.js
+```
+
+the above tree would generate the following routes:
+```
+/foo
+/foo/thing
+/bar/foo
 ```

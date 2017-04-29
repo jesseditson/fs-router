@@ -1,7 +1,8 @@
+const path = require('path')
 const test = require('tape')
 const router = require('..')
 
-let match = router(__dirname + '/fixtures/simple')
+let match = router(path.join(__dirname, '/fixtures/simple'))
 
 test('sets up routes from the fs', t => {
   t.plan(2)
