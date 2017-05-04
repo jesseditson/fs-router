@@ -1,7 +1,8 @@
+const path = require('path')
 const test = require('tape')
 const router = require('..')
 
-let match = router(__dirname + '/fixtures/priority')
+let match = router(path.join(__dirname, '/fixtures/priority'))
 
 test('matches high priority on collision with default', t => {
   t.plan(1)
