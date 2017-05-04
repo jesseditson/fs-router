@@ -56,6 +56,8 @@ module.exports = function router (routesDir, config) {
       let extPattern = new RegExp(path.extname(routeFile) + '$')
       if (!route.path) {
         route.path = '/' + path.relative(routesDir, routeFile).replace(extPattern, '')
+        //Fix issue with windows paths
+        route.path = route.path.replace(/\\/, '/')
       }
       return route
     })
