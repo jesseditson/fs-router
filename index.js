@@ -3,7 +3,7 @@ const fs = require('fs')
 const qs = require('querystring')
 
 
-const paramPattern = /(:|%)([^/]+)/
+const paramPattern = /(:|%)([^\/]+)/
 
 // takes routes and decorates them with a 'match' method that will return { params, query } if a path matches
 function addMatch (route) {
