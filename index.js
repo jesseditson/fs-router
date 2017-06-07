@@ -3,14 +3,14 @@ const fs = require('fs')
 const qs = require('querystring')
 
 
-const paramPattern = /(:|%)([^\/]+)/
+const paramPattern = /(?::|%)([^\/]+)/
 
 // takes routes and decorates them with a 'match' method that will return { params, query } if a path matches
 function addMatch (route) {
   let routePath = route.path
   let paramNames = []
   let matched
-  // find any paths prefixed with a `:`, and treat them as capture groups
+  // find any paths prefixed with `:` or `%`, and treat them as capture groups
   while ((matched = routePath.match(paramPattern)) !== null) {
     routePath = routePath.replace(paramPattern, '([^?/]+)')
     paramNames.push(matched[1])
@@ -18,7 +18,7 @@ function addMatch (route) {
   // if a route ends with `index`, allow matching that route without matching the `index` part
   if (path.basename(routePath) === 'index') {
     route.isIndex = true
-    routePath = routePath.replace(/\/index$/, '/?(:?index)?')
+    routePath = routePath.replace(/\/index$/, '/?([:%]?index)?')
   }
   // create a regex with our path
   let pattern = new RegExp(`^${routePath}(\\?(.*)|$)`, 'i')
