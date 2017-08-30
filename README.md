@@ -159,3 +159,9 @@ the above tree would generate the following routes:
 /foo/thing
 /bar/foo
 ```
+
+### Windows usage
+Be aware that windows file systems do not allow using ```:``` in the
+file/directory names.  In order to use this library effectively with routes that
+include param ```/foo/:fooId/bar/:barIs``` you will need to set up custom paths
+in your route files.
