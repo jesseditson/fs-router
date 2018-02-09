@@ -62,8 +62,7 @@ module.exports = function router (routesDir, config) {
 
         route.path = '/' + path.relative(routesDir, routeFile).replace(extPattern, '')
         //Fix issue with windows paths
-        route.path = route.path.replace(/\\/, '/')
-
+        route.path = route.path.replace(/\\/g, '/')
       }
       return route
     })
