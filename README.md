@@ -159,3 +159,21 @@ the above tree would generate the following routes:
 /foo/thing
 /bar/foo
 ```
+
+**Multiple file extensions**
+```javascript
+// index.js
+const { send } = require('micro')
+
+// set up the config to both include .js and .ts files.
+const config = {ext: ['.js', '.ts']}
+
+// pass config to `fs-router` as optional second paramater
+let match = require('fs-router')(__dirname + '/routes', config)
+
+module.exports = async function(req, res) {
+  let matched = match(req)
+  if (matched) return await matched(req, res)
+  send(res, 404, { error: 'Not found' })
+}
+```
