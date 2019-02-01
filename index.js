@@ -38,19 +38,20 @@ function addMatch (route) {
 }
 
 // recursively searches for all js files inside a directory tree, and returns their full paths
-function findRoutes (dir) {
+function findRoutes (dir, fileExtensions) {
+//  fileExtensions = (fileExtensions instanceof Array) ? fileExtensions : ['.js']
   let files = fs.readdirSync(dir)
   let resolve = f => path.join(dir, f)
-  let routes = files.filter(f => path.extname(f) === '.js').map(resolve)
+  let routes = files.filter(f => fileExtensions.indexOf(path.extname(f)) !== -1).map(resolve)
   let dirs = files.filter(f => fs.statSync(path.join(dir, f)).isDirectory()).map(resolve)
-  return routes.concat(...dirs.map(findRoutes))
+  return routes.concat(...dirs.map(subdir => findRoutes(subdir, fileExtensions)))
 }
 
 const val = v => (typeof v === 'undefined' ? 0 : v)
 
 module.exports = function router (routesDir, config) {
-
-  const routes = findRoutes(routesDir)
+  const fileExtensions = config && config.ext && config.ext instanceof Array ? config.ext : ['.js']
+  const routes = findRoutes(routesDir, fileExtensions)
     // if filter function is set, filter routes
     .filter(config && config.filter || function () { return true })
     // require route files, then add a 'path' property to them
