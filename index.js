@@ -39,7 +39,6 @@ function addMatch (route) {
 
 // recursively searches for all js files inside a directory tree, and returns their full paths
 function findRoutes (dir, fileExtensions) {
-//  fileExtensions = (fileExtensions instanceof Array) ? fileExtensions : ['.js']
   let files = fs.readdirSync(dir)
   let resolve = f => path.join(dir, f)
   let routes = files.filter(f => fileExtensions.indexOf(path.extname(f)) !== -1).map(resolve)
@@ -79,7 +78,7 @@ module.exports = function router (routesDir, config) {
 
   // generated match method - call with a req object to get a route.
   return function match (req) {
-    let routeFn = r => r[req.method] || (typeof r === 'function' && r)
+    let routeFn = r => r[req.method] || (typeof r === 'function' && r) || (typeof r.default === 'function' && r.default)
     let found = routes.find(r => {
       let matched = r.match(req.url)
       let hasFn = routeFn(r)
