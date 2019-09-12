@@ -29,8 +29,8 @@
   "homepage": "https://github.com/jesseditson/fs-router#readme",
   "devDependencies": {
     "@types/micro": "^7.3.1",
-    "coveralls": "^2.11.15",
-    "nyc": "^10.0.0",
+    "coveralls": "^3.0.6",
+    "nyc": "^14.1.1",
     "tape": "^4.6.3"
   }
 }
