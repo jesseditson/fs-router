@@ -1,6 +1,6 @@
 {
   "name": "fs-router",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Tiny router using the fs as paths",
   "main": "index.js",
   "scripts": {
