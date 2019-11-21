@@ -1,6 +1,10 @@
+os:
+  - linux
+  - osx
+  - windows
 language: node_js
-script: nyc npm test
-after_success: npm run coveralls
 node_js:
   - "6"
   - "node"
+script: nyc npm test
+after_success: npm run coveralls

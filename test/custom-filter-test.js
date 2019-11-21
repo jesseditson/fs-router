@@ -3,7 +3,7 @@ const test = require('tape')
 const router = require('..')
 
 // set up config to filter only paths ending `index.js`
-const config = {filter: f => /(?:^|\/)index.js$/.test(f)}
+const config = { filter: f => /(?:^|[\/,\\])index.js$/.test(f) }
 
 let match = router(path.join(__dirname, '/fixtures/filter'), config)
 
