@@ -2,7 +2,6 @@ const path = require('path')
 const fs = require('fs')
 const qs = require('querystring')
 
-
 const paramPattern = /(?::|%)([^\/]+)/
 
 // takes routes and decorates them with a 'match' method that will return { params, query } if a path matches
@@ -75,7 +74,7 @@ module.exports = function router (routesDir, config) {
     })
     // if a route exposes a `priority` property, sort the route on it.
     .sort((a, b) => val(a.priority) < val(b.priority) ? 1 : -1)
-
+  
   // generated match method - call with a req object to get a route.
   return function match (req) {
     let routeFn = r => r[req.method] || (typeof r === 'function' && r) || (typeof r.default === 'function' && r.default)

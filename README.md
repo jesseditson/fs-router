@@ -89,6 +89,32 @@ module.exports.GET = async function(req, res) {
 }
 ```
 
+**typescript**
+Use esModuleInterop and commonjs to import
+
+```javascript
+// tsconfig.json
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    ...config
+  }
+}
+```
+
+use the `RequestHandler` type from this lib
+```typescript
+import { RequestHandler } from 'fs-router'
+
+export const GET: RequestHandler = async (req, res) => {
+    // req.params and req.query will be typed correctly
+    send(res, 200, { params: req.params, query: req.query })
+}
+```
+
+A full [typescript example](examples/typescript) is available in the [examples directory](examples)
+
 **priority**
 ```javascript
 module.exports.GET = async function(req, res) {

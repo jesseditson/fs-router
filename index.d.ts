@@ -1,15 +1,21 @@
-import { IncomingMessage } from 'http'
-import { RequestHandler } from 'micro'
+import { IncomingMessage, ServerResponse } from 'http'
 
-declare module 'fs-router' {
-    // eslint-disable-next-line  @typescript-eslint/class-name-casing
-    interface fConfig {
-        filter?: (f: string) => boolean;
-        ext?: string[];
+declare function fsrouter(routesDir: string, config?: {
+    filter?: (f: string) => boolean;
+    ext?: string[];
+}): (req: IncomingMessage) => fsrouter.RequestHandler | void
+
+export = fsrouter
+export as namespace fsrouter
+
+declare namespace fsrouter {
+    interface FSRouterIncomingMessage extends IncomingMessage {
+        params: {
+            [paramName: string]: string
+        },
+        query: {
+            [paramName: string]: string
+        }
     }
-
-    export function match(req: IncomingMessage): RequestHandler | void
-
-    export default function router(routesDir: string, config?: fConfig): (req: IncomingMessage) => RequestHandler | void
+    export type RequestHandler = (req: FSRouterIncomingMessage, res: ServerResponse) => any;
 }
-

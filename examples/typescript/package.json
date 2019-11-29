@@ -1,0 +1,25 @@
+{
+  "name": "fs-router-typescript",
+  "version": "1.0.0",
+  "description": "An example app demonstrating using typescript and fs-router",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "micro",
+    "dev": "tsc-watch --onSuccess 'micro-dev'",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jesse Ditson <jesse.ditson@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/micro": "^7.3.3",
+    "@types/node": "^12.12.14",
+    "micro-dev": "^3.0.0",
+    "tsc-watch": "^4.0.0",
+    "typescript": "^3.7.2"
+  },
+  "dependencies": {
+    "fs-router": "../../",
+    "micro": "^9.3.4"
+  }
+}
